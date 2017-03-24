@@ -23,7 +23,7 @@ namespace GameRPG
             {
                 var bossLineArray = Rendering().Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
                 foreach (string line in bossLineArray)
-                {
+                {   
                     Console.SetCursorPosition(Placement.X, Placement.Y);
                     Console.Write(line);
                     Placement.Y++;

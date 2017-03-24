@@ -7,3 +7,9 @@ C:\Users\Texid\Documents\App Project\GameRPG\GameRPG\obj\Debug\GameRPG.pdb
 C:\Users\Texid\OneDrive\Documents\Ismael\GitHub\GameRPG\GameRPG\bin\Debug\GameRPG.exe.config
 C:\Users\Texid\OneDrive\Documents\Ismael\GitHub\GameRPG\GameRPG\obj\Debug\GameRPG.exe
 C:\Users\Texid\OneDrive\Documents\Ismael\GitHub\GameRPG\GameRPG\obj\Debug\GameRPG.pdb
+C:\Users\Ismael\Source\Repos\GameRPG\GameRPG\bin\Debug\GameRPG.exe.config
+C:\Users\Ismael\Source\Repos\GameRPG\GameRPG\obj\Debug\GameRPG.exe
+C:\Users\Ismael\Source\Repos\GameRPG\GameRPG\obj\Debug\GameRPG.pdb
+C:\Users\Ismael\Source\Repos\GameRPG\GameRPG\bin\Debug\GameRPG.exe
+C:\Users\Ismael\Source\Repos\GameRPG\GameRPG\bin\Debug\GameRPG.pdb
+C:\Users\Ismael\Source\Repos\GameRPG\GameRPG\obj\Debug\GameRPG.csprojResolveAssemblyReference.cache
