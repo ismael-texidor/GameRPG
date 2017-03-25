@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,11 @@ namespace GameRPG
 {
    abstract class Drawing
     {
+        public virtual bool? LineDropIt { get; set; }
         public virtual Coordinate Placement { get; set; }
         public virtual CharacterStats Stats { get; set; }
         public virtual bool ShouldDraw { get; set; }
+        
         //use these to override later 
         public virtual string Rendering()
         {
@@ -27,6 +30,10 @@ namespace GameRPG
                     Console.SetCursorPosition(Placement.X, Placement.Y);
                     Console.Write(line);
                     Placement.Y++;
+                    if(LineDropIt == true)
+                    {
+                        Thread.Sleep(200);
+                    }
                 }
             }
             ResetTopPlacement();

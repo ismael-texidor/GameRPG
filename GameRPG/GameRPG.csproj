@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Coordinate.cs" />
+    <Compile Include="DrawingObjects\FlameBoss.cs" />
     <Compile Include="DrawingObjects\GunAttack.cs" />
     <Compile Include="DrawingObjects\Boss.cs" />
     <Compile Include="DrawingObjects\Drawing.cs" />
@@ -55,7 +56,9 @@
     <Compile Include="DrawingObjects\Text.cs" />
     <Compile Include="DrawingObjects\TextBox.cs" />
     <Compile Include="CharacterStats.cs" />
+    <Compile Include="DrawingObjects\Town.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="HelperMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

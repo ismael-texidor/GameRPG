@@ -11,9 +11,8 @@ namespace GameRPG.DrawingObjects
         public override string Rendering()
         {
             const string textbox =
-                "  ______________________      \n" +
-                "/\\                     \\    \n" +
-                " \\_|                    |     \n" +
+                "    _____________________     \n" +
+                "   |                    |     \n" +
                 "   |                    |     \n" +
                 "   |                    |     \n" +
                 "   | ___________________|     \n" +
@@ -22,7 +21,15 @@ namespace GameRPG.DrawingObjects
             return textbox;
         }
 
-        public virtual void PlayerTextBoxInitialPlacement()
+        public void PlayerTextBoxInitialPlacement()
+        {
+            Placement = new Coordinate()
+            {
+                X = 12,
+                Y = 0
+            };
+        }
+        public void BossTextBoxInitialPlacement()
         {
             Placement = new Coordinate()
             {

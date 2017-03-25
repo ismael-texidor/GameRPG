@@ -11,14 +11,17 @@ namespace GameRPG
     public class Game
     {
         static Coordinate CornerScreenCoordinate { get; set; }
+        static HelperMethods HelperMethods = new HelperMethods();
+        //Drawing Objects.
         static StartGameBackground GameBackground = new StartGameBackground();
+        static Town Town = new Town();
         static Player Player = new Player();
         static Boss Boss = new Boss();
         static Gun Gun = new Gun();
         static Sword Sword = new Sword();
         static TextBox PlayerTextBox = new TextBox();
         static Text Text = new Text();
-        //Creating Stats
+        //Generating random numbers for stats.
         static Random randomNumber = new Random();
 
         public bool StartGame()
@@ -32,7 +35,7 @@ namespace GameRPG
                     //attack
                     case ConsoleKey.Spacebar:
                         //AttackAnimation is the Method
-                        IgnoreInputOnAMethod(AttackAnimation);
+                        HelperMethods.IgnoreInputOnAMethod(AttackAnimation);
                         break;
 
                     //Gun Weapon 
@@ -54,13 +57,14 @@ namespace GameRPG
         }
 
         /// <summary>
-        /// Initiates the game by setting up coordinates
-        /// calling drawing functions. 
+        /// Initiates the game by setting up drawing placement
+        /// and calling the drawing methods. 
         /// </summary>
         static void InitializeGame()
         {
             //set initial positions before drawing. 
             GameBackground.InitialPlacements();
+            Town.InitialPlacements();
             Player.InitialPlacements();
             Boss.InitialPlacements();
             Gun.InitialPlacements();
@@ -72,6 +76,7 @@ namespace GameRPG
                 X = 0,
                 Y = Console.WindowHeight - 3
             };
+
             //inialize stats. 
             Player.Stats = new CharacterStats
             {
@@ -102,21 +107,56 @@ namespace GameRPG
 
         static void DrawInitialGameBackground()
         {
+            GameBackground.LineDropIt = true;
             GameBackground.ShouldDraw = true;
             GameBackground.DrawMe();
+            var done = false;
             var name = "";
             do
             {
                 char c = Console.ReadKey().KeyChar;
-                if (c == '\n')
-                    break;
-
                 name += c;
-            } while (name.Length <=10);
+                if (name.Length >= 10 || name.Contains("\r"))
+                {
+                    done = true;
+                    name = name.Replace("\r", "").Replace("\n", "");
+                    name.Trim();
+                    if (name.Length == 0)
+                    {
+                        Console.Write("Um, you kind of need a name, let's try this again. This message will magically disapear in 5 seconds.");
+                        Thread.Sleep(5000);
+                        HelperMethods.EraseConsoleLine();
+                        done = false;
+                    }
+
+                    if (done)
+                    {
+                        Console.Write("Press Enter if you would like " + name + " as your player's name, otherwise press any key to enter another name.");
+                        var key = Console.ReadKey().Key;
+                        done = false;
+                        if(key == ConsoleKey.Enter)
+                        {
+                            done = true;
+                        }
+                        else
+                        {
+                            name = "";
+                        }
+                        HelperMethods.EraseConsoleLine();
+                    }
+                }
+            } while (!done);
+
+            Player.Name = name;
+            Console.Clear();
+            Town.LineDropIt = true;
+            Town.ShouldDraw = true;
+            Town.DrawMe();
+            Boss.DrawMe();
 
         }
         /// <summary>
-        ///Create Boss Battle Drawings
+        ///Create Boss Battle Drawings.
         /// </summary>
         static void DrawBossBattle()
         {
@@ -132,7 +172,7 @@ namespace GameRPG
                 Y = CornerScreenCoordinate.Y
             };
 
-            //ClearScreen
+            //Clear Screen.
             Console.Clear();
 
             //Draw the player.
@@ -143,30 +183,14 @@ namespace GameRPG
             //Draw the boss.    
             Boss.DrawMe();
 
-            //Draw TextBox and Text
+            //Draw TextBox and Text.
             Console.SetCursorPosition(cornerScreenCoordinate.X, cornerScreenCoordinate.Y);
-            Console.WriteLine("Spacebar to Attack.");
-            Console.WriteLine("Press A key for Gun and S key for the Sword");
-            Console.Write("Press the ESC to quit the game");
+            Console.WriteLine("Press the spacebar to attack.");
+            Console.WriteLine("Press the A key for your gun, and the S key for your sword.");
+            Console.Write("Press the ESC to quit the game.");
 
             Text.Placement = textCoordinate;
             CornerScreenCoordinate = cornerScreenCoordinate;
-        }
-
-        /// <summary>
-        /// Takes a method and runs it while ignoring all console input. 
-        /// </summary>
-        /// <param name="method"></param>
-        static void IgnoreInputOnAMethod(Action method)
-        {
-            var Done = false;
-            while (!Done)
-            {
-                while (Console.KeyAvailable) Console.ReadKey(true);
-                Console.ReadKey(true);
-                method();
-                Done = true;
-            }
         }
 
         static void AttackAnimation()
@@ -187,6 +211,7 @@ namespace GameRPG
                 BossDefeated();
             }
         }
+
         static void TextWhileInBattle()
         {
             PlayerTextBox.ShouldDraw = true;
@@ -200,8 +225,9 @@ namespace GameRPG
         {
 
         }
+
         /// <summary>
-        /// Draws attack animiation
+        /// Draws attack animiation and reduces boss's health.
         /// </summary>
         /// <param name="gun">If a the player has a gun different animations are shown
         /// </param>
@@ -212,11 +238,7 @@ namespace GameRPG
             int attackNumber = 0;
             if(gun)
             {
-                GunAttackAnimation.Placement = new Coordinate
-                {
-                    X = 65,
-                    Y = 10
-                };
+                GunAttackAnimation.InitialPlacements();
                 GunAttackAnimation.DrawMe();
                 GunAttackAnimation.Placement.Y = 10;
                 attackNumber = Gun.Stats.Attack + Player.Stats.Attack;
@@ -227,11 +249,7 @@ namespace GameRPG
             }
             else
             {
-                SwordAttackAnimation.Placement = new Coordinate
-                {
-                    X = 67,
-                    Y = 10
-                };
+                SwordAttackAnimation.InitialPlacements();
                 SwordAttackAnimation.DrawMe();
                 SwordAttackAnimation.Placement.Y = 10;
                 attackNumber = Sword.Stats.Attack + Player.Stats.Attack;

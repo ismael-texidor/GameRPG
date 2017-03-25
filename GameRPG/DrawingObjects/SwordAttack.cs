@@ -31,5 +31,13 @@ namespace GameRPG.DrawingObjects
                 "       ' : '      ";
             return attack;
         }
+        public override void InitialPlacements()
+        {
+            Placement = new Coordinate
+            {
+                X = 67,
+                Y = 10
+            };
+        }
     }
 }
