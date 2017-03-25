@@ -14,5 +14,14 @@ namespace GameRPG.DrawingObjects
         {
             return text;
         }
+
+        public virtual void PlayerTextInitialPlacement()
+        {
+            Placement = new Coordinate()
+            {
+                X = 17,
+                Y = 2
+            };
+        }
     }
 }

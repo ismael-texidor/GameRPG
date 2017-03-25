@@ -49,7 +49,10 @@ namespace GameRPG
             }
             ResetTopPlacement();
         }
-
+        public virtual void InitialPlacements()
+        {
+            //override with initial placements. 
+        }
         public virtual void ResetTopPlacement()
         {
             //override with resetplacements. 

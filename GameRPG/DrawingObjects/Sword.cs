@@ -35,6 +35,14 @@ namespace GameRPG.DrawingObjects
             Placement.X = 25;
             DrawMe();
         }
+        public override void InitialPlacements()
+        {
+            Placement = new Coordinate()
+            {
+                X = 25,
+                Y = 7
+            };
+        }
         public override void ResetTopPlacement()
         {
             Placement.Y = 7;

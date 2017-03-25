@@ -43,6 +43,15 @@ namespace GameRPG.DrawingObjects
                 "( ( ( ) ( ) ) ( ) ) ( ) ) ) ( ) )      \n";
             return boss;
         }
+        public override void InitialPlacements()
+        {
+            //override with initial placements. 
+            Placement = new Coordinate()
+            {
+                X = 80,
+                Y = 7
+            };
+        }
         public override void ResetTopPlacement()
         {
             Placement.Y = 7;

@@ -8,6 +8,7 @@ namespace GameRPG
 {
     class Player: Drawing
     {
+        public string Name { get; set; }
         public override string Rendering()
         {
             const string player =
@@ -30,7 +31,15 @@ namespace GameRPG
             Console.SetCursorPosition(Placement.X, Placement.Y);
             Console.Write(Rendering());
         }
-
+        public override void InitialPlacements()
+        {
+            //override with initial placements. 
+            Placement = new Coordinate()
+            {
+                X = 0,
+                Y = 9
+            };
+        }
         public override void ResetTopPlacement()
         {
             Placement.Y = 9;

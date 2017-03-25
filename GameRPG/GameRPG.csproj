@@ -49,6 +49,7 @@
     <Compile Include="DrawingObjects\Drawing.cs" />
     <Compile Include="DrawingObjects\Gun.cs" />
     <Compile Include="DrawingObjects\Player.cs" />
+    <Compile Include="DrawingObjects\StartGameBackground.cs" />
     <Compile Include="DrawingObjects\Sword.cs" />
     <Compile Include="DrawingObjects\SwordAttack.cs" />
     <Compile Include="DrawingObjects\Text.cs" />

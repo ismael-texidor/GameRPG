@@ -11,6 +11,7 @@ namespace GameRPG
     public class Game
     {
         static Coordinate CornerScreenCoordinate { get; set; }
+        static StartGameBackground GameBackground = new StartGameBackground();
         static Player Player = new Player();
         static Boss Boss = new Boss();
         static Gun Gun = new Gun();
@@ -53,6 +54,68 @@ namespace GameRPG
         }
 
         /// <summary>
+        /// Initiates the game by setting up coordinates
+        /// calling drawing functions. 
+        /// </summary>
+        static void InitializeGame()
+        {
+            //set initial positions before drawing. 
+            GameBackground.InitialPlacements();
+            Player.InitialPlacements();
+            Boss.InitialPlacements();
+            Gun.InitialPlacements();
+            Sword.InitialPlacements();
+            PlayerTextBox.PlayerTextBoxInitialPlacement();
+            Text.PlayerTextInitialPlacement();
+            CornerScreenCoordinate = new Coordinate()
+            {
+                X = 0,
+                Y = Console.WindowHeight - 3
+            };
+            //inialize stats. 
+            Player.Stats = new CharacterStats
+            {
+                Attack = randomNumber.Next(15, 40),
+                HealthPower = 300
+            };
+            Boss.Stats = new CharacterStats
+            {
+                Attack = randomNumber.Next(1, 5),
+                HealthPower = 700
+            };
+            Gun.Stats = new CharacterStats
+            {
+                Attack = randomNumber.Next(10, 20)
+            };
+            Sword.Stats = new CharacterStats
+            {
+                Attack = randomNumber.Next(10, 20)
+            };
+
+            //Why bring a knife to a gun fight?  
+            Sword.ShouldDraw = false;
+            Gun.ShouldDraw = true;
+
+            DrawInitialGameBackground();
+            DrawBossBattle();
+        }
+
+        static void DrawInitialGameBackground()
+        {
+            GameBackground.ShouldDraw = true;
+            GameBackground.DrawMe();
+            var name = "";
+            do
+            {
+                char c = Console.ReadKey().KeyChar;
+                if (c == '\n')
+                    break;
+
+                name += c;
+            } while (name.Length <=10);
+
+        }
+        /// <summary>
         ///Create Boss Battle Drawings
         /// </summary>
         static void DrawBossBattle()
@@ -91,7 +154,7 @@ namespace GameRPG
         }
 
         /// <summary>
-        /// Takes a method runs it while ignoring all input. 
+        /// Takes a method and runs it while ignoring all console input. 
         /// </summary>
         /// <param name="method"></param>
         static void IgnoreInputOnAMethod(Action method)
@@ -100,7 +163,7 @@ namespace GameRPG
             while (!Done)
             {
                 while (Console.KeyAvailable) Console.ReadKey(true);
-                ConsoleKeyInfo key = Console.ReadKey(true);
+                Console.ReadKey(true);
                 method();
                 Done = true;
             }
@@ -137,6 +200,11 @@ namespace GameRPG
         {
 
         }
+        /// <summary>
+        /// Draws attack animiation
+        /// </summary>
+        /// <param name="gun">If a the player has a gun different animations are shown
+        /// </param>
         static void DrawAttackNumberReduceBossHealth(bool gun)
         {
             var GunAttackAnimation = new GunAttack();
@@ -175,72 +243,6 @@ namespace GameRPG
             Boss.Stats.HealthPower =- (attackNumber);
             Gun.Stats.Attack = randomNumber.Next(10, 20);
             Sword.Stats.Attack = randomNumber.Next(10, 20);
-        }
-
-        /// <summary>
-        /// Initiates the game by setting up coordinates
-        /// calling drawing functions. 
-        /// </summary>
-        static void InitializeGame()
-        {
-            Player.Placement = new Coordinate()
-            {
-                X = 0,
-                Y = 9
-            };
-            Boss.Placement = new Coordinate()
-            {
-                X = 80,
-                Y = 7
-            };
-            Gun.Placement = new Coordinate()
-            {
-                X = 25,
-                Y = 10
-            };
-            Sword.Placement = new Coordinate()
-            {
-                X = 25,
-                Y = 7
-            };
-            PlayerTextBox.Placement = new Coordinate()
-            {
-                X = 12,
-                Y = 0
-            };
-            Text.Placement = new Coordinate()
-            {
-                X = 17,
-                Y = 2
-            };
-            CornerScreenCoordinate = new Coordinate()
-            {
-                X = 0,
-                Y = Console.WindowHeight - 3
-            };
-
-            Player.Stats = new CharacterStats
-            {
-                Attack = randomNumber.Next(15, 40),
-                HealthPower = 300
-            };
-            Boss.Stats = new CharacterStats
-            {
-                Attack = randomNumber.Next(1, 5),
-                HealthPower = 700
-            };
-            Gun.Stats = new CharacterStats
-            {
-                Attack = randomNumber.Next(10, 20)
-            };
-            Sword.Stats = new CharacterStats
-            {
-                Attack = randomNumber.Next(10, 20)
-            };
-
-            Sword.ShouldDraw = false;
-            Gun.ShouldDraw = true;
-            DrawBossBattle();
         }
     }
 }

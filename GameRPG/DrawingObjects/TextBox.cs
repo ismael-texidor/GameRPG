@@ -21,5 +21,14 @@ namespace GameRPG.DrawingObjects
                 "  o                              ";
             return textbox;
         }
+
+        public virtual void PlayerTextBoxInitialPlacement()
+        {
+            Placement = new Coordinate()
+            {
+                X = 12,
+                Y = 0
+            };
+        }
     }
 }
