@@ -17,6 +17,8 @@ namespace GameRPG
         static Sword Sword = new Sword();
         static TextBox PlayerTextBox = new TextBox();
         static Text Text = new Text();
+        //Creating Stats
+        static Random randomNumber = new Random();
 
         public bool StartGame()
         {
@@ -26,16 +28,9 @@ namespace GameRPG
             {
                 switch (keyInfo.Key)
                 {
-                    //case ConsoleKey.UpArrow:
-                    //    MoveAndDrawScreen(0, -1);
-                    //    break;
-
-                    //case ConsoleKey.DownArrow:
-                    //    MoveAndDrawScreen(0, 1);
-                    //    break;
-
                     //attack
                     case ConsoleKey.Spacebar:
+                        //AttackAnimation is the Method
                         IgnoreInputOnAMethod(AttackAnimation);
                         break;
 
@@ -62,35 +57,6 @@ namespace GameRPG
         /// </summary>
         static void DrawBossBattle()
         {
-
-            Coordinate playerCoordinate = new Coordinate()
-            {
-                X = Player.Placement.X,
-                Y = Player.Placement.Y
-            };
-
-            Coordinate bossCoordinate = new Coordinate()
-            {
-                X = Boss.Placement.X,
-                Y = Boss.Placement.Y
-            };
-
-            Coordinate gunCoordinate = new Coordinate()
-            {
-                X = Gun.Placement.X,
-                Y = Gun.Placement.Y
-            };
-
-            Coordinate swordCoordinate = new Coordinate()
-            {
-                X = Sword.Placement.X,
-                Y = Sword.Placement.Y
-            };
-            Coordinate playerTextBoxCoordinate = new Coordinate()
-            {
-                X = PlayerTextBox.Placement.X,
-                Y = PlayerTextBox.Placement.Y
-            };
             Coordinate textCoordinate = new Coordinate()
             {
                 X = Text.Placement.X,
@@ -111,27 +77,23 @@ namespace GameRPG
             //Draw the weapons.
             Gun.DrawMe();
             Sword.DrawMe();
-
             //Draw the boss.    
             Boss.DrawMe();
 
             //Draw TextBox and Text
-
             Console.SetCursorPosition(cornerScreenCoordinate.X, cornerScreenCoordinate.Y);
             Console.WriteLine("Spacebar to Attack.");
             Console.WriteLine("Press A key for Gun and S key for the Sword");
             Console.Write("Press the ESC to quit the game");
 
-            //reset coordinates for all drawings
-            Player.Placement = playerCoordinate;
-            Boss.Placement = bossCoordinate;
-            Gun.Placement = gunCoordinate;
-            Sword.Placement = swordCoordinate;
-            PlayerTextBox.Placement = playerTextBoxCoordinate;
             Text.Placement = textCoordinate;
             CornerScreenCoordinate = cornerScreenCoordinate;
         }
 
+        /// <summary>
+        /// Takes a method runs it while ignoring all input. 
+        /// </summary>
+        /// <param name="method"></param>
         static void IgnoreInputOnAMethod(Action method)
         {
             var Done = false;
@@ -149,11 +111,12 @@ namespace GameRPG
             if (Gun.ShouldDraw)
             {
                 Gun.BulletAnimation();
-                DrawAttackNumberReduceBossHealth();
+                DrawAttackNumberReduceBossHealth(true);
             }
             if (Sword.ShouldDraw)
             {
-                DrawBossBattle();
+                Sword.SwordAnimation();
+                DrawAttackNumberReduceBossHealth(false);
             }
 
             if (Boss.Stats.HealthPower < 0)
@@ -174,24 +137,44 @@ namespace GameRPG
         {
 
         }
-        static void DrawAttackNumberReduceBossHealth()
+        static void DrawAttackNumberReduceBossHealth(bool gun)
         {
-            //Figure attack power minus boss hp
-            var AttackAnimation = new Attack();
-
-            AttackAnimation.Placement = new Coordinate
+            var GunAttackAnimation = new GunAttack();
+            var SwordAttackAnimation = new SwordAttack();
+            int attackNumber = 0;
+            if(gun)
             {
-                X = 65,
-                Y = 10
-            };
-            AttackAnimation.DrawMe();
-            AttackAnimation.Placement.Y = 10;
-            var attackNumber = Player.Stats.Attack + Gun.Stats.Attack;
-            Console.SetCursorPosition(73, 12);
-            Console.Write(attackNumber);
-            Thread.Sleep(300);
-            AttackAnimation.DeleteMe();
-            Boss.Stats.HealthPower = -(attackNumber);
+                GunAttackAnimation.Placement = new Coordinate
+                {
+                    X = 65,
+                    Y = 10
+                };
+                GunAttackAnimation.DrawMe();
+                GunAttackAnimation.Placement.Y = 10;
+                attackNumber = Gun.Stats.Attack + Player.Stats.Attack;
+                Console.SetCursorPosition(73, 12);
+                Console.Write(attackNumber);
+                Thread.Sleep(300);
+                GunAttackAnimation.DeleteMe();
+            }
+            else
+            {
+                SwordAttackAnimation.Placement = new Coordinate
+                {
+                    X = 67,
+                    Y = 10
+                };
+                SwordAttackAnimation.DrawMe();
+                SwordAttackAnimation.Placement.Y = 10;
+                attackNumber = Sword.Stats.Attack + Player.Stats.Attack;
+                Console.SetCursorPosition(75, 12);
+                Console.Write(attackNumber);
+                Thread.Sleep(300);
+                SwordAttackAnimation.DeleteMe();
+            }
+            Boss.Stats.HealthPower =- (attackNumber);
+            Gun.Stats.Attack = randomNumber.Next(10, 20);
+            Sword.Stats.Attack = randomNumber.Next(10, 20);
         }
 
         /// <summary>
@@ -236,21 +219,23 @@ namespace GameRPG
                 Y = Console.WindowHeight - 3
             };
 
-            //Creating Stats
-            Random random = new Random();
             Player.Stats = new CharacterStats
             {
-                Attack = random.Next(15, 40),
+                Attack = randomNumber.Next(15, 40),
                 HealthPower = 300
             };
             Boss.Stats = new CharacterStats
             {
-                Attack = random.Next(1, 5),
+                Attack = randomNumber.Next(1, 5),
                 HealthPower = 700
             };
             Gun.Stats = new CharacterStats
             {
-                Attack = random.Next(10, 20)
+                Attack = randomNumber.Next(10, 20)
+            };
+            Sword.Stats = new CharacterStats
+            {
+                Attack = randomNumber.Next(10, 20)
             };
 
             Sword.ShouldDraw = false;

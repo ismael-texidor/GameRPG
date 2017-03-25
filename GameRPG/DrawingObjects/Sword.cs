@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,26 @@ namespace GameRPG.DrawingObjects
              " .o/-.            \n" +
              "//:```            \n";
             return sword;
+        }
+        public void SwordAnimation()
+        {
+            //Animiation
+            var left = 25;
+            while (left < 64)
+            {
+                Placement.X = left;
+                DrawMe();
+                Thread.Sleep(10);
+                DeleteMe();
+                left++;
+                //Thread.Sleep(60);
+            }
+            Placement.X = 25;
+            DrawMe();
+        }
+        public override void ResetTopPlacement()
+        {
+            Placement.Y = 7;
         }
 
     }

@@ -43,5 +43,9 @@ namespace GameRPG.DrawingObjects
                 "( ( ( ) ( ) ) ( ) ) ( ) ) ) ( ) )      \n";
             return boss;
         }
+        public override void ResetTopPlacement()
+        {
+            Placement.Y = 7;
+        }
     }
 }

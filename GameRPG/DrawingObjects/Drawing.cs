@@ -21,14 +21,15 @@ namespace GameRPG
         {
             if (ShouldDraw)
             {
-                var bossLineArray = Rendering().Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-                foreach (string line in bossLineArray)
+                var lineArray = Rendering().Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+                foreach (string line in lineArray)
                 {   
                     Console.SetCursorPosition(Placement.X, Placement.Y);
                     Console.Write(line);
                     Placement.Y++;
                 }
             }
+            ResetTopPlacement();
         }
 
         public virtual void DeleteMe()
@@ -46,6 +47,12 @@ namespace GameRPG
                 Console.Write(delete);
                 Placement.Y++;
             }
+            ResetTopPlacement();
+        }
+
+        public virtual void ResetTopPlacement()
+        {
+            //override with resetplacements. 
         }
     }
 }

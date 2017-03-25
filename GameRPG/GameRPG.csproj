@@ -44,12 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Coordinate.cs" />
-    <Compile Include="DrawingObjects\Attack.cs" />
+    <Compile Include="DrawingObjects\GunAttack.cs" />
     <Compile Include="DrawingObjects\Boss.cs" />
     <Compile Include="DrawingObjects\Drawing.cs" />
     <Compile Include="DrawingObjects\Gun.cs" />
     <Compile Include="DrawingObjects\Player.cs" />
     <Compile Include="DrawingObjects\Sword.cs" />
+    <Compile Include="DrawingObjects\SwordAttack.cs" />
     <Compile Include="DrawingObjects\Text.cs" />
     <Compile Include="DrawingObjects\TextBox.cs" />
     <Compile Include="CharacterStats.cs" />

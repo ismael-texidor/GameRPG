@@ -30,5 +30,10 @@ namespace GameRPG
             Console.SetCursorPosition(Placement.X, Placement.Y);
             Console.Write(Rendering());
         }
+
+        public override void ResetTopPlacement()
+        {
+            Placement.Y = 9;
+        }
     }
 }

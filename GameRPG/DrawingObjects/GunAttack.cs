@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameRPG.DrawingObjects
 {
-    class Attack:Drawing
+    class GunAttack:Drawing
     {
         public override bool ShouldDraw
         {
@@ -23,12 +23,12 @@ namespace GameRPG.DrawingObjects
         public override string Rendering()
         {
             const string attack =
-"       . : .    \n" +
-"    '.  :  .'   \n" +
-"    .__'.:.'  . \n" +
-"    .  .':'.  . \n" +
-"    .'  :  '.   \n" +
-"       ' : '      ";
+                "       . : .    \n" +
+                "    '.  :  .'   \n" +
+                "    .__'.:.'  . \n" +
+                "    .  .':'.  . \n" +
+                "    .'  :  '.   \n" +
+                "       ' : '      ";
             return attack;
         }
     }

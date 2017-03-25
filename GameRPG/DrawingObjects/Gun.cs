@@ -36,5 +36,10 @@ namespace GameRPG.DrawingObjects
             Console.SetCursorPosition(80, 10);
             Console.Write("  ");
         }
+
+        public override void ResetTopPlacement()
+        {
+            Placement.Y = 10;
+        }
     }
 }
