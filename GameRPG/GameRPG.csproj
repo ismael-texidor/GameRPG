@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Coordinate.cs" />
+    <Compile Include="DrawingObjects\Fire.cs" />
     <Compile Include="DrawingObjects\FlameBoss.cs" />
     <Compile Include="DrawingObjects\GunAttack.cs" />
     <Compile Include="DrawingObjects\Boss.cs" />

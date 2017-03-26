@@ -8,6 +8,8 @@ namespace GameRPG.DrawingObjects
 {
     class Town:Drawing
     {
+        TextBox BossTextBox = new TextBox();
+        Fire Fire = new Fire();
         public override string Rendering()
         {
             const string town =
@@ -37,6 +39,32 @@ namespace GameRPG.DrawingObjects
             return town;
         }
 
+        public void TownFire(int RunTimes)
+        {
+            Fire.LineDropIt = true;
+            Fire.ShouldDraw = true;
+            Fire.ThreadingSpeed = 200;
+            Fire.InitialPlacements();
+            Fire.DrawingColor = ConsoleColor.Red;
+            while (RunTimes > 0)
+            {
+                TownFires();
+                RunTimes--;
+            }
+        }
+        private void TownFires()
+        {
+            var randomNumber = new Random();
+            var Text = new List<string>();
+
+            Text.Add("*Concentrates*\n" +
+                    "Cast Fire");
+            BossTextBox.AddListOfText(Text, false);
+            Fire.DrawMe();
+            Fire.Placement.X = randomNumber.Next(0, 30);
+            Fire.Placement.Y = randomNumber.Next(0, 20);
+            
+        }
         public override void InitialPlacements()
         {
             //override with initial placements. 

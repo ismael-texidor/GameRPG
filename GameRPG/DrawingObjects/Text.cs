@@ -8,11 +8,11 @@ namespace GameRPG.DrawingObjects
 {
     class Text:Drawing
     {
-        public string text { get; set; }
+        public string charactherText { get; set; }
 
         public override string Rendering()
         {
-            return text;
+            return charactherText;
         }
 
         public virtual void PlayerTextInitialPlacement()
@@ -20,7 +20,15 @@ namespace GameRPG.DrawingObjects
             Placement = new Coordinate()
             {
                 X = 17,
-                Y = 2
+                Y = 1
+            };
+        }
+        public virtual void BossTextInitialPlacement()
+        {
+            Placement = new Coordinate()
+            {
+                X = 94,
+                Y = 1
             };
         }
     }

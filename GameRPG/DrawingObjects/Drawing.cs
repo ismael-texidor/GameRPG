@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace GameRPG
 {
-   abstract class Drawing
+    abstract class Drawing
     {
+        public virtual int? ThreadingSpeed { get; set; }
         public virtual bool? LineDropIt { get; set; }
         public virtual Coordinate Placement { get; set; }
         public virtual CharacterStats Stats { get; set; }
         public virtual bool ShouldDraw { get; set; }
-        
+        public virtual ConsoleColor? DrawingColor { get; set; }
+
         //use these to override later 
         public virtual string Rendering()
         {
@@ -22,17 +24,26 @@ namespace GameRPG
         
         public virtual void DrawMe()
         {
+            if(ThreadingSpeed == null)
+            {
+                ThreadingSpeed = 200;
+            }
+            if(DrawingColor == null)
+            {
+                DrawingColor = ConsoleColor.White;
+            }
             if (ShouldDraw)
             {
                 var lineArray = Rendering().Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
                 foreach (string line in lineArray)
                 {   
                     Console.SetCursorPosition(Placement.X, Placement.Y);
+                    Console.ForegroundColor = DrawingColor.Value;
                     Console.Write(line);
                     Placement.Y++;
                     if(LineDropIt == true)
                     {
-                        Thread.Sleep(200);
+                        Thread.Sleep(ThreadingSpeed.Value);
                     }
                 }
             }
@@ -51,6 +62,7 @@ namespace GameRPG
                     delete = string.Concat(delete, " ");
                 }
                 Console.SetCursorPosition(Placement.X, Placement.Y);
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Write(delete);
                 Placement.Y++;
             }

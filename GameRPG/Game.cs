@@ -10,19 +10,21 @@ namespace GameRPG
 {
     public class Game
     {
-        static Coordinate CornerScreenCoordinate { get; set; }
-        static HelperMethods HelperMethods = new HelperMethods();
+        Coordinate CornerScreenCoordinate { get; set; }
+        HelperMethods HelperMethods = new HelperMethods();
         //Drawing Objects.
-        static StartGameBackground GameBackground = new StartGameBackground();
-        static Town Town = new Town();
-        static Player Player = new Player();
-        static Boss Boss = new Boss();
-        static Gun Gun = new Gun();
-        static Sword Sword = new Sword();
-        static TextBox PlayerTextBox = new TextBox();
-        static Text Text = new Text();
+        StartGameBackground GameBackground = new StartGameBackground();
+        Town Town = new Town();
+        Player Player = new Player();
+        Boss Boss = new Boss();
+        Gun Gun = new Gun();
+        Sword Sword = new Sword();
+        TextBox PlayerTextBox = new TextBox();
+        TextBox BossTextBox = new TextBox();
+        Text PlayerText = new Text();
+        Text BossText = new Text();
         //Generating random numbers for stats.
-        static Random randomNumber = new Random();
+        Random randomNumber = new Random();
 
         public bool StartGame()
         {
@@ -60,7 +62,7 @@ namespace GameRPG
         /// Initiates the game by setting up drawing placement
         /// and calling the drawing methods. 
         /// </summary>
-        static void InitializeGame()
+        void InitializeGame()
         {
             //set initial positions before drawing. 
             GameBackground.InitialPlacements();
@@ -70,7 +72,7 @@ namespace GameRPG
             Gun.InitialPlacements();
             Sword.InitialPlacements();
             PlayerTextBox.PlayerTextBoxInitialPlacement();
-            Text.PlayerTextInitialPlacement();
+            PlayerText.PlayerTextInitialPlacement();
             CornerScreenCoordinate = new Coordinate()
             {
                 X = 0,
@@ -105,67 +107,69 @@ namespace GameRPG
             DrawBossBattle();
         }
 
-        static void DrawInitialGameBackground()
+        void DrawInitialGameBackground()
         {
-            GameBackground.LineDropIt = true;
-            GameBackground.ShouldDraw = true;
-            GameBackground.DrawMe();
-            var done = false;
-            var name = "";
-            do
-            {
-                char c = Console.ReadKey().KeyChar;
-                name += c;
-                if (name.Length >= 10 || name.Contains("\r"))
-                {
-                    done = true;
-                    name = name.Replace("\r", "").Replace("\n", "");
-                    name.Trim();
-                    if (name.Length == 0)
-                    {
-                        Console.Write("Um, you kind of need a name, let's try this again. This message will magically disapear in 5 seconds.");
-                        Thread.Sleep(5000);
-                        HelperMethods.EraseConsoleLine();
-                        done = false;
-                    }
+            //GameBackground.LineDropIt = true;
+            //GameBackground.ShouldDraw = true;
+            //GameBackground.DrawMe();
+            //var done = false;
+            //var name = "";
+            //do
+            //{
+            //    char c = Console.ReadKey().KeyChar;
+            //    name += c;
+            //    if (name.Length >= 10 || name.Contains("\r"))
+            //    {
+            //        done = true;
+            //        name = name.Replace("\r", "").Replace("\n", "");
+            //        name.Trim();
+            //        if (name.Length == 0)
+            //        {
+            //            Console.Write("Um, you kind of need a name, let's try this again. This message will magically disapear in 5 seconds.");
+            //            Thread.Sleep(5000);
+            //            HelperMethods.EraseConsoleLine();
+            //            done = false;
+            //        }
 
-                    if (done)
-                    {
-                        Console.Write("Press Enter if you would like " + name + " as your player's name, otherwise press any key to enter another name.");
-                        var key = Console.ReadKey().Key;
-                        done = false;
-                        if(key == ConsoleKey.Enter)
-                        {
-                            done = true;
-                        }
-                        else
-                        {
-                            name = "";
-                        }
-                        HelperMethods.EraseConsoleLine();
-                    }
-                }
-            } while (!done);
+            //        if (done)
+            //        {
+            //            Console.Write("Press Enter if you would like " + name + " as your player's name, otherwise press any key to enter another name.");
+            //            var key = Console.ReadKey().Key;
+            //            done = false;
+            //            if(key == ConsoleKey.Enter)
+            //            {
+            //                done = true;
+            //            }
+            //            else
+            //            {
+            //                name = "";
+            //            }
+            //            HelperMethods.EraseConsoleLine();
+            //        }
+            //    }
+            //} while (!done);
 
-            Player.Name = name;
+            //Player.Name = name;
             Console.Clear();
             Town.LineDropIt = true;
             Town.ShouldDraw = true;
             Town.DrawMe();
             Boss.DrawMe();
-
+            var Text = new List<string>();
+            Text.Add("Oh look a random town\n"+
+                "I'm a evil monster. \n"+
+                "What should I do?!");
+            Text.Add("I should probably\n" +
+                "destroy it. \n");
+            BossTextBox.AddListOfText(Text, true);
+            Town.TownFire(randomNumber.Next(4,9));
+            
         }
         /// <summary>
         ///Create Boss Battle Drawings.
         /// </summary>
-        static void DrawBossBattle()
+        void DrawBossBattle()
         {
-            Coordinate textCoordinate = new Coordinate()
-            {
-                X = Text.Placement.X,
-                Y = Text.Placement.Y
-            };
-
             Coordinate cornerScreenCoordinate = new Coordinate()
             {
                 X = CornerScreenCoordinate.X,
@@ -189,11 +193,10 @@ namespace GameRPG
             Console.WriteLine("Press the A key for your gun, and the S key for your sword.");
             Console.Write("Press the ESC to quit the game.");
 
-            Text.Placement = textCoordinate;
             CornerScreenCoordinate = cornerScreenCoordinate;
         }
 
-        static void AttackAnimation()
+        void AttackAnimation()
         {
             if (Gun.ShouldDraw)
             {
@@ -212,13 +215,13 @@ namespace GameRPG
             }
         }
 
-        static void TextWhileInBattle()
+        void TextWhileInBattle()
         {
             PlayerTextBox.ShouldDraw = true;
             PlayerTextBox.DrawMe();
-            Text.ShouldDraw = true;
-            Text.text = "You scumbag!";
-            Text.DrawMe();
+            PlayerText.ShouldDraw = true;
+            PlayerText.charactherText = "You scumbag!";
+            PlayerText.DrawMe();
         }
 
         static void BossDefeated()
@@ -231,7 +234,7 @@ namespace GameRPG
         /// </summary>
         /// <param name="gun">If a the player has a gun different animations are shown
         /// </param>
-        static void DrawAttackNumberReduceBossHealth(bool gun)
+        void DrawAttackNumberReduceBossHealth(bool gun)
         {
             var GunAttackAnimation = new GunAttack();
             var SwordAttackAnimation = new SwordAttack();

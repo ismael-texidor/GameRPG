@@ -8,19 +8,63 @@ namespace GameRPG.DrawingObjects
 {
     class TextBox:Drawing
     {
+        static Text BossText = new Text();
+        static Text PlayerText = new Text();
         public override string Rendering()
         {
             const string textbox =
-                "    _____________________     \n" +
-                "   |                    |     \n" +
-                "   |                    |     \n" +
-                "   |                    |     \n" +
-                "   | ___________________|     \n" +
-                "   \\_ / _______________/     \n"+
+                "    ______________________     \n" +
+                "   |                     |     \n" +
+                "   |                     |     \n" +
+                "   |                     |     \n" +
+                "   | ____________________|     \n" +
+                "   \\_ / ________________/     \n"+
                 "  o                              ";
             return textbox;
         }
-
+        public void AddListOfText (List<string> ListText, bool stopForUser)
+        {
+            if (stopForUser)
+                foreach (string x in ListText)
+                {
+                    AddTextBossWithStop(x);
+                }
+            else
+                foreach (string x in ListText)
+                {
+                    AddTextBossWithoutStop(x);
+                }
+        }
+        public void AddTextBossWithStop(string TextList)
+        {
+            BossTextBoxInitialPlacement();
+            ShouldDraw = true;
+            DrawMe();
+            BossText.ThreadingSpeed = 600;
+            BossText.BossTextInitialPlacement();
+            BossText.ShouldDraw = true;
+            BossText.LineDropIt = true;
+            BossText.charactherText = TextList;
+            BossText.DrawMe();
+            var key = Console.ReadKey().Key;
+            BossText.BossTextInitialPlacement();
+            BossText.DeleteMe();
+        }
+        public void AddTextBossWithoutStop(string TextList)
+        {
+            BossTextBoxInitialPlacement();
+            ShouldDraw = true;
+            DrawMe();
+            BossText.ThreadingSpeed = 300;
+            BossText.BossTextInitialPlacement();
+            BossText.ShouldDraw = true;
+            BossText.LineDropIt = true;
+            BossText.charactherText = TextList;
+            BossText.DrawMe();
+            BossText.ThreadingSpeed = 300;
+            BossText.BossTextInitialPlacement();
+            BossText.DeleteMe();
+        }
         public void PlayerTextBoxInitialPlacement()
         {
             Placement = new Coordinate()
@@ -33,7 +77,7 @@ namespace GameRPG.DrawingObjects
         {
             Placement = new Coordinate()
             {
-                X = 12,
+                X = 90,
                 Y = 0
             };
         }
