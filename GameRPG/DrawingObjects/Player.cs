@@ -8,6 +8,9 @@ namespace GameRPG
 {
     class Player: Drawing
     {
+        /// <summary>
+        /// Characther Name. 
+        /// </summary>
         public string Name { get; set; }
         public override string Rendering()
         {

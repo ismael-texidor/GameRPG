@@ -16,3 +16,9 @@ C:\Users\Ismael\Source\Repos\GameRPG\GameRPG\obj\Debug\GameRPG.csprojResolveAsse
 C:\Users\Texid\OneDrive\Documents\Ismael\GitHub\GameRPG\GameRPG\bin\Debug\GameRPG.exe
 C:\Users\Texid\OneDrive\Documents\Ismael\GitHub\GameRPG\GameRPG\bin\Debug\GameRPG.pdb
 C:\Users\Texid\OneDrive\Documents\Ismael\GitHub\GameRPG\GameRPG\obj\Debug\GameRPG.csprojResolveAssemblyReference.cache
+C:\Users\Ismael.Texidor-Rodri\Source\Repos\GameRPG\GameRPG\bin\Debug\GameRPG.exe.config
+C:\Users\Ismael.Texidor-Rodri\Source\Repos\GameRPG\GameRPG\obj\Debug\GameRPG.exe
+C:\Users\Ismael.Texidor-Rodri\Source\Repos\GameRPG\GameRPG\obj\Debug\GameRPG.pdb
+C:\Users\Ismael.Texidor-Rodri\Source\Repos\GameRPG\GameRPG\bin\Debug\GameRPG.exe
+C:\Users\Ismael.Texidor-Rodri\Source\Repos\GameRPG\GameRPG\bin\Debug\GameRPG.pdb
+C:\Users\Ismael.Texidor-Rodri\Source\Repos\GameRPG\GameRPG\obj\Debug\GameRPG.csprojResolveAssemblyReference.cache

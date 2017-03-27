@@ -19,6 +19,10 @@ namespace GameRPG.DrawingObjects
              "//:```            \n";
             return sword;
         }
+
+        /// <summary>
+        /// Animates the Sword Attack. 
+        /// </summary>
         public void SwordAnimation()
         {
             //Animiation

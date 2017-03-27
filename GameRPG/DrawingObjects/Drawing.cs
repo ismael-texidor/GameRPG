@@ -16,12 +16,15 @@ namespace GameRPG
         public virtual bool ShouldDraw { get; set; }
         public virtual ConsoleColor? DrawingColor { get; set; }
 
-        //use these to override later 
+        //Override to render any string drawing I want. 
         public virtual string Rendering()
         {
             return "Override For Each Drawing Object";
         }
         
+        /// <summary>
+        /// Draws whatever is overriden in the Rendering method. 
+        /// </summary>
         public virtual void DrawMe()
         {
             if(ThreadingSpeed == null)
@@ -51,6 +54,9 @@ namespace GameRPG
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Deletes  whatever is overriden in the Rendering method. 
+        /// </summary>
         public virtual void DeleteMe()
         {
             var lineArray = Rendering().Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
@@ -69,10 +75,18 @@ namespace GameRPG
             }
             ResetTopPlacement();
         }
+
+        /// <summary>
+        /// Override to set the initial placement of each object. 
+        /// </summary>
         public virtual void InitialPlacements()
         {
             //override with initial placements. 
         }
+
+        /// <summary>
+        /// Resets the Y component of the placement Object. 
+        /// </summary>
         public virtual void ResetTopPlacement()
         {
             //override with resetplacements. 

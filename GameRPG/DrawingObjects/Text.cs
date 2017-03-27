@@ -47,6 +47,23 @@ namespace GameRPG.DrawingObjects
                 Y = 5
             };
         }
+        public void ContinueInitialPlacement()
+        {
+            Placement = new Coordinate()
+            {
+                X = 0,
+                Y = 0
+            };
+        }
+        public void ContinueText()
+        {
+            ContinueInitialPlacement();
+            ShouldDraw = true;
+            charactherText = "Press Any Key To Continue";
+            DrawingColor = ConsoleColor.Red;
+            DrawMe();
+            ContinueInitialPlacement();
+        }
         public void AddingBossName(string name)
         {
             BossNameInitialPlacement();

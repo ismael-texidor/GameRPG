@@ -19,6 +19,9 @@ namespace GameRPG.DrawingObjects
             return gun;
         }
 
+        /// <summary>
+        /// Animates the bullet firing to the boss. 
+        /// </summary>
         public void BulletAnimation()
         {
             //Animiation

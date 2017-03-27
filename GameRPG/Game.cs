@@ -29,6 +29,11 @@ namespace GameRPG
         //Generating random numbers for stats.
         Random randomNumber = new Random();
 
+        /// <summary>
+        /// Starting point of the game. 
+        /// Loops through all commands until it returns true and the game is done. 
+        /// </summary>
+        /// <returns></returns>
         public bool StartGame()
         {
             InitializeGame();
@@ -58,7 +63,7 @@ namespace GameRPG
                         break;
                 }
                 //if (True)
-                if (randomNumber.Next(1, 4) == 2)
+                if (randomNumber.Next(1, 3) == 2)
                 {
                     HelperMethods.IgnoreInputOnAMethod(BossAttackAnimation);
                 }
@@ -135,56 +140,68 @@ namespace GameRPG
             Sword.ShouldDraw = false;
             Gun.ShouldDraw = true;
 
-            //DrawInitialGameBackground();
+            DrawInitialGameBackground();
             DrawBossBattle();
         }
 
+        /// <summary>
+        /// Draws initial background and collects the player's name. 
+        /// </summary>
         void DrawInitialGameBackground()
         {
-            //GameBackground.LineDropIt = true;
-            //GameBackground.ShouldDraw = true;
-            //GameBackground.DrawMe();
-            //var done = false;
+            GameBackground.LineDropIt = true;
+            GameBackground.ShouldDraw = true;
+            GameBackground.DrawMe();
+            var done = false;
             var name = "";
-            //do
-            //{
-            //    char c = Console.ReadKey().KeyChar;
-            //    name += c;
-            //    if (name.Length >= 10 || name.Contains("\r"))
-            //    {
-            //        done = true;
-            //        name = name.Replace("\r", "").Replace("\n", "");
-            //        name.Trim();
-            //        if (name.Length == 0)
-            //        {
-            //            Console.Write("Um, you kind of need a name, let's try this again. This message will magically disapear in 5 seconds.");
-            //            Thread.Sleep(5000);
-            //            HelperMethods.EraseConsoleLine();
-            //            done = false;
-            //        }
+            do
+            {
+                char c = Console.ReadKey().KeyChar;
+                name += c;
+                var lenghtMoreThan10 = name.Length >= 10;
+                if (lenghtMoreThan10 || name.Contains("\r"))
+                {
+                    done = true;
+                    name = name.Replace("\r", "").Replace("\n", "");
+                    name.Trim();
 
-            //        if (done)
-            //        {
-            //            Console.Write("Press Enter if you would like " + name + " as your player's name, otherwise press any key to enter another name.");
-            //            var key = Console.ReadKey().Key;
-            //            done = false;
-            //            if(key == ConsoleKey.Enter)
-            //            {
-            //                done = true;
-            //            }
-            //            else
-            //            {
-            //                name = "";
-            //            }
-            //            HelperMethods.EraseConsoleLine();
-            //        }
-            //    }
-            //} while (!done);
+                    if (name.Length == 0)
+                    {
+                        Console.Write("Um, you kind of need a name, let's try this again. This message will magically disapear in 5 seconds.");
+                        Thread.Sleep(5000);
+                        HelperMethods.EraseConsoleLine();
+                        done = false;
+                    }
 
-           Player.Name = name;
+                    if (done)
+                    {
+                        if (lenghtMoreThan10)
+                        {
+                            HelperMethods.EraseConsoleLine();
+                        }
+                        Console.Write("Press Enter if you would like " + name + " as your player's name, otherwise press any key to enter another name.");
+                        var key = Console.ReadKey().Key;
+                        done = false;
+                        if (key == ConsoleKey.Enter)
+                        {
+                            done = true;
+                        }
+                        else
+                        {
+                            name = "";
+                        }
+                        HelperMethods.EraseConsoleLine();
+                    }
+                }
+            } while (!done);
+
+            Player.Name = name;
            DrawTownAndFireScenes();
         }
 
+        /// <summary>
+        /// Draws the boss and town fire scenes. 
+        /// </summary>
         void DrawTownAndFireScenes()
         {
             Console.Clear();
@@ -202,7 +219,7 @@ namespace GameRPG
             Town.TownFire(randomNumber.Next(4, 9));
             Console.Clear();
             Player.DrawMe();
-            PlayerTextBox.name = "testing";//Player.Name;
+            PlayerTextBox.name = Player.Name;
             Text = new List<string>();
             Text.Add("Sephiroth!? Did \n" +
                 "Sephiroth do this \n"+
@@ -215,6 +232,7 @@ namespace GameRPG
                 "the evil boss!");
             PlayerTextBox.AddPlayerListOfText(Text, true);
         }
+
         /// <summary>
         ///Create Boss Battle Drawings.
         /// </summary>
@@ -246,6 +264,9 @@ namespace GameRPG
             CornerScreenCoordinate = cornerScreenCoordinate;
         }
 
+        /// <summary>
+        /// Player Attack Animations
+        /// </summary>
         void PlayerAttackAnimation()
         {
             if (Gun.ShouldDraw)
@@ -259,6 +280,10 @@ namespace GameRPG
                 DrawAttackNumberReduceBossHealth(false);
             }
         }
+
+        /// <summary>
+        /// Boss Attack Animations
+        /// </summary>
         void BossAttackAnimation()
         {
             var attackNumber = Boss.Stats.Attack;
@@ -270,13 +295,16 @@ namespace GameRPG
             Fire.DrawMe();
             Console.SetCursorPosition(5, 2);
             Console.Write(attackNumber);
-            Boss.Stats.Attack = randomNumber.Next(1, 5);
+            Boss.Stats.Attack = randomNumber.Next(10, 20);
             Player.Stats.HealthPower -= attackNumber;
             Thread.Sleep(300);
             Fire.InitialPlacements();
             Fire.DeleteMe();
         }
 
+        /// <summary>
+        /// Draws the boss defeated scenes. 
+        /// </summary>
         void BossDefeated()
         {
             Boss.DeleteMe();
@@ -289,6 +317,9 @@ namespace GameRPG
             BossTextBox.AddBossListOfText(Text, true);
         }
 
+        /// <summary>
+        /// Draws the player defeated scenes. 
+        /// </summary>
         void PlayerDefeated()
         {
             var Text = new List<string>();

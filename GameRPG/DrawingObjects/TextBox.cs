@@ -12,6 +12,7 @@ namespace GameRPG.DrawingObjects
         Text PlayerText = new Text();
         Text BossNameText = new Text();
         Text PlayerNameText = new Text();
+        Text ContinueText = new Text();
         public string name { get; set; }
         public override string Rendering()
         {
@@ -51,7 +52,9 @@ namespace GameRPG.DrawingObjects
             BossText.LineDropIt = true;
             BossText.charactherText = TextList;
             BossText.DrawMe();
+            ContinueText.ContinueText();
             var key = Console.ReadKey().Key;
+            ContinueText.DeleteMe();
             BossText.BossTextInitialPlacement();
             BossText.DeleteMe();
         }
