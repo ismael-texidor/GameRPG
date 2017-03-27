@@ -15,7 +15,7 @@ namespace GameRPG.DrawingObjects
             return charactherText;
         }
 
-        public virtual void PlayerTextInitialPlacement()
+        public void PlayerTextInitialPlacement()
         {
             Placement = new Coordinate()
             {
@@ -23,13 +23,43 @@ namespace GameRPG.DrawingObjects
                 Y = 1
             };
         }
-        public virtual void BossTextInitialPlacement()
+        public void BossTextInitialPlacement()
         {
             Placement = new Coordinate()
             {
                 X = 94,
                 Y = 1
             };
+        }
+        public void BossNameInitialPlacement()
+        {
+            Placement = new Coordinate()
+            {
+                X = 98,
+                Y = 5
+            };
+        }
+        public void PlayerNameInitialPlacement()
+        {
+            Placement = new Coordinate()
+            {
+                X = 20,
+                Y = 5
+            };
+        }
+        public void AddingBossName(string name)
+        {
+            BossNameInitialPlacement();
+            ShouldDraw = true;
+            charactherText = name;
+            DrawMe();
+        }
+        public void AddingPlayerName(string name)
+        {
+            PlayerNameInitialPlacement();
+            ShouldDraw = true;
+            charactherText = name;
+            DrawMe();
         }
     }
 }

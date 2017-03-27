@@ -17,12 +17,15 @@ namespace GameRPG
         Town Town = new Town();
         Player Player = new Player();
         Boss Boss = new Boss();
+        FlameBoss FlameBoss = new FlameBoss();
         Gun Gun = new Gun();
         Sword Sword = new Sword();
+        Fire Fire = new Fire();
         TextBox PlayerTextBox = new TextBox();
         TextBox BossTextBox = new TextBox();
         Text PlayerText = new Text();
         Text BossText = new Text();
+        TheEnd End = new TheEnd();
         //Generating random numbers for stats.
         Random randomNumber = new Random();
 
@@ -37,7 +40,7 @@ namespace GameRPG
                     //attack
                     case ConsoleKey.Spacebar:
                         //AttackAnimation is the Method
-                        HelperMethods.IgnoreInputOnAMethod(AttackAnimation);
+                        HelperMethods.IgnoreInputOnAMethod(PlayerAttackAnimation);
                         break;
 
                     //Gun Weapon 
@@ -53,6 +56,35 @@ namespace GameRPG
                         Sword.ShouldDraw = true;
                         DrawBossBattle();
                         break;
+                }
+                //if (True)
+                if (randomNumber.Next(1, 4) == 2)
+                {
+                    HelperMethods.IgnoreInputOnAMethod(BossAttackAnimation);
+                }
+                if (Player.Stats.HealthPower < 0)
+                {
+                    HelperMethods.IgnoreInputOnAMethod(PlayerDefeated);
+                    Console.Clear();
+                    End.InitialPlacements();
+                    End.ShouldDraw = true;
+                    End.DrawingColor = ConsoleColor.Blue;
+                    End.DrawMe();
+                    Thread.Sleep(300);
+                    var readKey = Console.ReadKey().Key;
+                    return true;
+                }
+                if (Boss.Stats.HealthPower < 0)
+                {
+                    HelperMethods.IgnoreInputOnAMethod(BossDefeated);
+                    Console.Clear();
+                    End.InitialPlacements();
+                    End.ShouldDraw = true;
+                    End.DrawingColor = ConsoleColor.Blue;
+                    End.DrawMe();
+                    Thread.Sleep(300);
+                    var readKey = Console.ReadKey().Key;
+                    return true;
                 }
             }
             return true;
@@ -103,7 +135,7 @@ namespace GameRPG
             Sword.ShouldDraw = false;
             Gun.ShouldDraw = true;
 
-            DrawInitialGameBackground();
+            //DrawInitialGameBackground();
             DrawBossBattle();
         }
 
@@ -113,7 +145,7 @@ namespace GameRPG
             //GameBackground.ShouldDraw = true;
             //GameBackground.DrawMe();
             //var done = false;
-            //var name = "";
+            var name = "";
             //do
             //{
             //    char c = Console.ReadKey().KeyChar;
@@ -149,28 +181,46 @@ namespace GameRPG
             //    }
             //} while (!done);
 
-            //Player.Name = name;
+           Player.Name = name;
+           DrawTownAndFireScenes();
+        }
+
+        void DrawTownAndFireScenes()
+        {
             Console.Clear();
             Town.LineDropIt = true;
             Town.ShouldDraw = true;
             Town.DrawMe();
             Boss.DrawMe();
             var Text = new List<string>();
-            Text.Add("Oh look a random town\n"+
-                "I'm a evil monster. \n"+
+            Text.Add("Oh look a random town\n" +
+                "I'm a evil monster. \n" +
                 "What should I do?!");
             Text.Add("I should probably\n" +
                 "destroy it. \n");
-            BossTextBox.AddListOfText(Text, true);
-            Town.TownFire(randomNumber.Next(4,9));
-            
+            BossTextBox.AddBossListOfText(Text, true);
+            Town.TownFire(randomNumber.Next(4, 9));
+            Console.Clear();
+            Player.DrawMe();
+            PlayerTextBox.name = "testing";//Player.Name;
+            Text = new List<string>();
+            Text.Add("Sephiroth!? Did \n" +
+                "Sephiroth do this \n"+
+                "to you?! Sephiroth..");
+            Text.Add("SOLDIER, Mako \n" +
+                "Reactors Shin -Ra.. \n" +
+                "I hate them all!");
+            Text.Add("Oh wait. Wrong\n" +
+                "game! I must defeat \n" +
+                "the evil boss!");
+            PlayerTextBox.AddPlayerListOfText(Text, true);
         }
         /// <summary>
         ///Create Boss Battle Drawings.
         /// </summary>
         void DrawBossBattle()
         {
-            Coordinate cornerScreenCoordinate = new Coordinate()
+            var cornerScreenCoordinate = new Coordinate()
             {
                 X = CornerScreenCoordinate.X,
                 Y = CornerScreenCoordinate.Y
@@ -196,7 +246,7 @@ namespace GameRPG
             CornerScreenCoordinate = cornerScreenCoordinate;
         }
 
-        void AttackAnimation()
+        void PlayerAttackAnimation()
         {
             if (Gun.ShouldDraw)
             {
@@ -208,25 +258,43 @@ namespace GameRPG
                 Sword.SwordAnimation();
                 DrawAttackNumberReduceBossHealth(false);
             }
-
-            if (Boss.Stats.HealthPower < 0)
-            {
-                BossDefeated();
-            }
+        }
+        void BossAttackAnimation()
+        {
+            var attackNumber = Boss.Stats.Attack;
+            Fire.LineDropIt = true;
+            Fire.ShouldDraw = true;
+            Fire.ThreadingSpeed = 100;
+            Fire.InitialPlacements();
+            Fire.DrawingColor = ConsoleColor.Red;
+            Fire.DrawMe();
+            Console.SetCursorPosition(5, 2);
+            Console.Write(attackNumber);
+            Boss.Stats.Attack = randomNumber.Next(1, 5);
+            Player.Stats.HealthPower -= attackNumber;
+            Thread.Sleep(300);
+            Fire.InitialPlacements();
+            Fire.DeleteMe();
         }
 
-        void TextWhileInBattle()
+        void BossDefeated()
         {
-            PlayerTextBox.ShouldDraw = true;
-            PlayerTextBox.DrawMe();
-            PlayerText.ShouldDraw = true;
-            PlayerText.charactherText = "You scumbag!";
-            PlayerText.DrawMe();
+            Boss.DeleteMe();
+            FlameBoss.InitialPlacements();
+            FlameBoss.DrawingColor = ConsoleColor.Red;
+            FlameBoss.DrawMe();
+            var Text = new List<string>();
+            Text.Add("AHHHH the fires of hell!\n" +
+                "I can't.....*dies*");
+            BossTextBox.AddBossListOfText(Text, true);
         }
 
-        static void BossDefeated()
+        void PlayerDefeated()
         {
-
+            var Text = new List<string>();
+            Text.Add("I failed everyone\n" +
+                "*dies*");
+            BossTextBox.AddBossListOfText(Text, false);
         }
 
         /// <summary>
@@ -261,7 +329,7 @@ namespace GameRPG
                 Thread.Sleep(300);
                 SwordAttackAnimation.DeleteMe();
             }
-            Boss.Stats.HealthPower =- (attackNumber);
+            Boss.Stats.HealthPower -= attackNumber;
             Gun.Stats.Attack = randomNumber.Next(10, 20);
             Sword.Stats.Attack = randomNumber.Next(10, 20);
         }

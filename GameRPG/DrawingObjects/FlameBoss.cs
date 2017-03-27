@@ -55,8 +55,8 @@ namespace GameRPG.DrawingObjects
             //override with initial placements. 
             Placement = new Coordinate()
             {
-                X = 80,
-                Y = 7
+                X = 45,
+                Y = 4
             };
         }
         public override void ResetTopPlacement()

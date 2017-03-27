@@ -40,12 +40,12 @@ namespace GameRPG.DrawingObjects
             Placement = new Coordinate()
             {
                 X = 25,
-                Y = 7
+                Y = 10
             };
         }
         public override void ResetTopPlacement()
         {
-            Placement.Y = 7;
+            Placement.Y = 10;
         }
 
     }

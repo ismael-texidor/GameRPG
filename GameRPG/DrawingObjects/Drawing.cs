@@ -48,6 +48,7 @@ namespace GameRPG
                 }
             }
             ResetTopPlacement();
+            Console.ResetColor();
         }
 
         public virtual void DeleteMe()

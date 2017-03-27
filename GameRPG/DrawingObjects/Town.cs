@@ -59,7 +59,7 @@ namespace GameRPG.DrawingObjects
 
             Text.Add("*Concentrates*\n" +
                     "Cast Fire");
-            BossTextBox.AddListOfText(Text, false);
+            BossTextBox.AddBossListOfText(Text, false);
             Fire.DrawMe();
             Fire.Placement.X = randomNumber.Next(0, 30);
             Fire.Placement.Y = randomNumber.Next(0, 20);

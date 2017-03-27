@@ -8,8 +8,11 @@ namespace GameRPG.DrawingObjects
 {
     class TextBox:Drawing
     {
-        static Text BossText = new Text();
-        static Text PlayerText = new Text();
+        Text BossText = new Text();
+        Text PlayerText = new Text();
+        Text BossNameText = new Text();
+        Text PlayerNameText = new Text();
+        public string name { get; set; }
         public override string Rendering()
         {
             const string textbox =
@@ -18,11 +21,12 @@ namespace GameRPG.DrawingObjects
                 "   |                     |     \n" +
                 "   |                     |     \n" +
                 "   | ____________________|     \n" +
-                "   \\_ / ________________/     \n"+
+                "   \\_ /                 |     \n" +
+                "       \\________________/      \n" +
                 "  o                              ";
             return textbox;
         }
-        public void AddListOfText (List<string> ListText, bool stopForUser)
+        public void AddBossListOfText (List<string> ListText, bool stopForUser)
         {
             if (stopForUser)
                 foreach (string x in ListText)
@@ -40,6 +44,7 @@ namespace GameRPG.DrawingObjects
             BossTextBoxInitialPlacement();
             ShouldDraw = true;
             DrawMe();
+            BossNameText.AddingBossName("Random Evil Boss");
             BossText.ThreadingSpeed = 600;
             BossText.BossTextInitialPlacement();
             BossText.ShouldDraw = true;
@@ -55,15 +60,62 @@ namespace GameRPG.DrawingObjects
             BossTextBoxInitialPlacement();
             ShouldDraw = true;
             DrawMe();
-            BossText.ThreadingSpeed = 300;
+            BossNameText.AddingBossName("Random Evil Boss");
+            BossText.ThreadingSpeed = 500;
             BossText.BossTextInitialPlacement();
             BossText.ShouldDraw = true;
             BossText.LineDropIt = true;
             BossText.charactherText = TextList;
             BossText.DrawMe();
-            BossText.ThreadingSpeed = 300;
+            BossText.ThreadingSpeed = 500;
             BossText.BossTextInitialPlacement();
             BossText.DeleteMe();
+        }
+
+        public void AddPlayerListOfText(List<string> ListText, bool stopForUser)
+        {
+            if (stopForUser)
+                foreach (string x in ListText)
+                {
+                    AddTextPlayerWithStop(x);
+                }
+            else
+                foreach (string x in ListText)
+                {
+                    AddTextPlayerWithoutStop(x);
+                }
+        }
+        public void AddTextPlayerWithStop(string TextList)
+        {
+            PlayerTextBoxInitialPlacement();
+            ShouldDraw = true;
+            DrawMe();
+            PlayerNameText.AddingPlayerName(name);
+            PlayerText.ThreadingSpeed = 600;
+            PlayerText.PlayerTextInitialPlacement();
+            PlayerText.ShouldDraw = true;
+            PlayerText.LineDropIt = true;
+            PlayerText.charactherText = TextList;
+            PlayerText.DrawMe();
+            var key = Console.ReadKey().Key;
+            PlayerText.PlayerTextInitialPlacement();
+            PlayerText.DeleteMe();
+        }
+        public void AddTextPlayerWithoutStop(string TextList)
+        {
+            PlayerTextBoxInitialPlacement();
+            ShouldDraw = true;
+            DrawMe();
+            PlayerNameText.AddingPlayerName(name);
+            PlayerText.ThreadingSpeed = 500;
+            PlayerText.PlayerTextInitialPlacement();
+            PlayerText.ShouldDraw = true;
+            PlayerText.LineDropIt = true;
+            PlayerText.charactherText = TextList;
+            PlayerText.DrawMe();
+            PlayerText.ThreadingSpeed = 500;
+            PlayerText.PlayerTextInitialPlacement();
+            PlayerText.DeleteMe();
         }
         public void PlayerTextBoxInitialPlacement()
         {

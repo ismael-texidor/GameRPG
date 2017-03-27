@@ -27,7 +27,7 @@ namespace GameRPG
             var done = false;
             while (!done)
             {
-                while (Console.KeyAvailable) Console.ReadKey(true);
+                while (Console.KeyAvailable) 
                 Console.ReadKey(true);
                 method();
                 done = true;

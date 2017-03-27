@@ -19,6 +19,17 @@ namespace GameRPG
                 {
                     var game = new Game();
                     done = game.StartGame();
+                    if(done)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Do you want to play again? Press Y for yes, and N for no.");
+                        done = true;
+                        var readKey = Console.ReadKey().Key;
+                        if (readKey == ConsoleKey.Y)
+                        {
+                            done = false;
+                        }
+                    }
                 }
                 catch (Exception e)
                 {

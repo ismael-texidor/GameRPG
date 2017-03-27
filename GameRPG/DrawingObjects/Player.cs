@@ -37,7 +37,7 @@ namespace GameRPG
             Placement = new Coordinate()
             {
                 X = 0,
-                Y = 9
+                Y = 11
             };
         }
         public override void ResetTopPlacement()
