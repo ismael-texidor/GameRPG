@@ -103,7 +103,7 @@ namespace GameRPG.DrawingObjects
             PlayerText.charactherText = TextList;
             PlayerText.DrawMe();
             var key = Console.ReadKey().Key;
-            Thread.Sleep(1000);
+            Thread.Sleep(1200);
             PlayerText.PlayerTextInitialPlacement();
             PlayerText.DeleteMe();
         }

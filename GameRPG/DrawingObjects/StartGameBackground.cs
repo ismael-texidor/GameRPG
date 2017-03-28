@@ -38,7 +38,7 @@ namespace GameRPG.DrawingObjects
                 "                    / /___ | |/ / /_/ / / / /                                                        \n" +
                 "                   /_____/ |___/\\__,_/_/ /_/                                                        \n" +
                 "                                                                                                     \n" +
-                "Please enter the player's name. (Use no more than 10 characthers)                                    \n";        
+                "Please enter the player's name and press enter. (Use no more than 10 characthers)                                    \n";        
 
             return background;
         }

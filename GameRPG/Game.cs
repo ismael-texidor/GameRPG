@@ -63,7 +63,7 @@ namespace GameRPG
                         DrawBossBattle();
                         break;
                 }
-                //if (True)
+
                 if (randomNumber.Next(1, 3) == 2)
                 {
                     HelperMethods.IgnoreInputOnAMethod(BossAttackAnimation);
@@ -77,7 +77,7 @@ namespace GameRPG
                     End.ShouldDraw = true;
                     End.DrawingColor = ConsoleColor.Blue;
                     End.DrawMe();
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1000);
                     ContinueText.ContinueText();
                     var key = Console.ReadKey().Key;
                     ContinueText.DeleteMe();
@@ -94,7 +94,7 @@ namespace GameRPG
                     End.ShouldDraw = true;
                     End.DrawingColor = ConsoleColor.Blue;
                     End.DrawMe();
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1000);
                     ContinueText.ContinueText();
                     var key = Console.ReadKey().Key;
                     ContinueText.DeleteMe();
@@ -325,9 +325,18 @@ namespace GameRPG
             var Text = new List<string>();
             Text.Add("AHHHH the fires of hell!\n" +
                 "I can't.....*dies*");
-            Thread.Sleep(1000);
+            Thread.Sleep(1200);
             BossTextBox.AddBossListOfText(Text, true);
-            Thread.Sleep(2000);
+            Thread.Sleep(1200);
+            Console.Clear();
+            Player.DrawMe();
+            Text = new List<string>();
+            Text.Add("Well that was\n" +
+                "easy.");
+            Thread.Sleep(1200);
+            PlayerTextBox.AddPlayerListOfText(Text, true);
+            Thread.Sleep(1200);
+
         }
 
         /// <summary>
@@ -338,9 +347,8 @@ namespace GameRPG
             var Text = new List<string>();
             Text.Add("I failed everyone\n" +
                 "*dies*");
-            Thread.Sleep(2000);
+            Thread.Sleep(1200);
             PlayerTextBox.AddPlayerListOfText(Text, true);
-            Thread.Sleep(2000);
         }
 
         /// <summary>
