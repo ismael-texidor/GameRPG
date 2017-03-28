@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,6 +56,7 @@ namespace GameRPG.DrawingObjects
             ContinueText.ContinueText();
             var key = Console.ReadKey().Key;
             ContinueText.DeleteMe();
+            Thread.Sleep(1000);
             BossText.BossTextInitialPlacement();
             BossText.DeleteMe();
         }
@@ -101,6 +103,7 @@ namespace GameRPG.DrawingObjects
             PlayerText.charactherText = TextList;
             PlayerText.DrawMe();
             var key = Console.ReadKey().Key;
+            Thread.Sleep(1000);
             PlayerText.PlayerTextInitialPlacement();
             PlayerText.DeleteMe();
         }

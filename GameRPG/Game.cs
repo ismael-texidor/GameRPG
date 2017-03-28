@@ -26,6 +26,7 @@ namespace GameRPG
         Text PlayerText = new Text();
         Text BossText = new Text();
         TheEnd End = new TheEnd();
+        Text ContinueText = new Text();
         //Generating random numbers for stats.
         Random randomNumber = new Random();
 
@@ -69,26 +70,35 @@ namespace GameRPG
                 }
                 if (Player.Stats.HealthPower < 0)
                 {
+                    Thread.Sleep(2000);
                     HelperMethods.IgnoreInputOnAMethod(PlayerDefeated);
                     Console.Clear();
                     End.InitialPlacements();
                     End.ShouldDraw = true;
                     End.DrawingColor = ConsoleColor.Blue;
                     End.DrawMe();
-                    Thread.Sleep(300);
-                    var readKey = Console.ReadKey().Key;
+                    Thread.Sleep(2000);
+                    ContinueText.ContinueText();
+                    var key = Console.ReadKey().Key;
+                    ContinueText.DeleteMe();
+                    Thread.Sleep(1000);
+
                     return true;
                 }
                 if (Boss.Stats.HealthPower < 0)
                 {
+                    Thread.Sleep(2000);
                     HelperMethods.IgnoreInputOnAMethod(BossDefeated);
                     Console.Clear();
                     End.InitialPlacements();
                     End.ShouldDraw = true;
                     End.DrawingColor = ConsoleColor.Blue;
                     End.DrawMe();
-                    Thread.Sleep(300);
-                    var readKey = Console.ReadKey().Key;
+                    Thread.Sleep(2000);
+                    ContinueText.ContinueText();
+                    var key = Console.ReadKey().Key;
+                    ContinueText.DeleteMe();
+                    Thread.Sleep(1000);
                     return true;
                 }
             }
@@ -120,7 +130,7 @@ namespace GameRPG
             Player.Stats = new CharacterStats
             {
                 Attack = randomNumber.Next(15, 40),
-                HealthPower = 300
+                HealthPower = 700
             };
             Boss.Stats = new CharacterStats
             {
@@ -151,7 +161,7 @@ namespace GameRPG
         {
             GameBackground.LineDropIt = true;
             GameBackground.ShouldDraw = true;
-            GameBackground.DrawMe();
+            HelperMethods.IgnoreInputOnAMethod(GameBackground.DrawMe);
             var done = false;
             var name = "";
             do
@@ -180,6 +190,7 @@ namespace GameRPG
                             HelperMethods.EraseConsoleLine();
                         }
                         Console.Write("Press Enter if you would like " + name + " as your player's name, otherwise press any key to enter another name.");
+                        Thread.Sleep(1000);
                         var key = Console.ReadKey().Key;
                         done = false;
                         if (key == ConsoleKey.Enter)
@@ -295,7 +306,7 @@ namespace GameRPG
             Fire.DrawMe();
             Console.SetCursorPosition(5, 2);
             Console.Write(attackNumber);
-            Boss.Stats.Attack = randomNumber.Next(10, 20);
+            Boss.Stats.Attack = randomNumber.Next(15, 70);
             Player.Stats.HealthPower -= attackNumber;
             Thread.Sleep(300);
             Fire.InitialPlacements();
@@ -314,7 +325,9 @@ namespace GameRPG
             var Text = new List<string>();
             Text.Add("AHHHH the fires of hell!\n" +
                 "I can't.....*dies*");
+            Thread.Sleep(1000);
             BossTextBox.AddBossListOfText(Text, true);
+            Thread.Sleep(2000);
         }
 
         /// <summary>
@@ -325,7 +338,9 @@ namespace GameRPG
             var Text = new List<string>();
             Text.Add("I failed everyone\n" +
                 "*dies*");
-            BossTextBox.AddBossListOfText(Text, false);
+            Thread.Sleep(2000);
+            PlayerTextBox.AddPlayerListOfText(Text, true);
+            Thread.Sleep(2000);
         }
 
         /// <summary>
